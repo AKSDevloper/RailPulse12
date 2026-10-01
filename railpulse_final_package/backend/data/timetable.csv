@@ -1,0 +1,55 @@
+train_id,train_number,train_name,train_type,sequence,station_id,station_name,distance_km,scheduled_arrival,scheduled_departure
+T1,12417,Prayagraj Express,Mail/Express,0,NDLS,New Delhi,0,--,06:00
+T1,12417,Prayagraj Express,Mail/Express,1,GZB,Ghaziabad Jn,19,06:10,06:12
+T1,12417,Prayagraj Express,Mail/Express,2,ALJN,Aligarh Jn,128,07:11,07:13
+T1,12417,Prayagraj Express,Mail/Express,3,TDL,Tundla Jn,224,08:04,08:06
+T1,12417,Prayagraj Express,Mail/Express,4,ETW,Etawah,297,08:45,08:47
+T1,12417,Prayagraj Express,Mail/Express,5,CNB,Kanpur Central,440,10:04,--
+T2,12002,Shatabdi Express,Superfast,0,NDLS,New Delhi,0,--,06:22
+T2,12002,Shatabdi Express,Superfast,1,GZB,Ghaziabad Jn,19,06:32,06:34
+T2,12002,Shatabdi Express,Superfast,2,ALJN,Aligarh Jn,128,07:33,07:35
+T2,12002,Shatabdi Express,Superfast,3,TDL,Tundla Jn,224,08:26,08:28
+T2,12002,Shatabdi Express,Superfast,4,ETW,Etawah,297,09:07,09:09
+T2,12002,Shatabdi Express,Superfast,5,CNB,Kanpur Central,440,10:26,--
+T3,12554,Vaishali Express,Express,0,NDLS,New Delhi,0,--,06:46
+T3,12554,Vaishali Express,Express,1,GZB,Ghaziabad Jn,19,06:56,06:58
+T3,12554,Vaishali Express,Express,2,ALJN,Aligarh Jn,128,07:57,07:59
+T3,12554,Vaishali Express,Express,3,TDL,Tundla Jn,224,08:50,08:52
+T3,12554,Vaishali Express,Express,4,ETW,Etawah,297,09:31,09:33
+T3,12554,Vaishali Express,Express,5,CNB,Kanpur Central,440,10:50,--
+T4,12303,Poorva Express,Mail/Express,0,NDLS,New Delhi,0,--,07:10
+T4,12303,Poorva Express,Mail/Express,1,GZB,Ghaziabad Jn,19,07:20,07:22
+T4,12303,Poorva Express,Mail/Express,2,ALJN,Aligarh Jn,128,08:21,08:23
+T4,12303,Poorva Express,Mail/Express,3,TDL,Tundla Jn,224,09:14,09:16
+T4,12303,Poorva Express,Mail/Express,4,ETW,Etawah,297,09:55,09:57
+T4,12303,Poorva Express,Mail/Express,5,CNB,Kanpur Central,440,11:14,--
+T5,12034,Kanpur Shatabdi,Superfast,0,NDLS,New Delhi,0,--,07:36
+T5,12034,Kanpur Shatabdi,Superfast,1,GZB,Ghaziabad Jn,19,07:46,07:48
+T5,12034,Kanpur Shatabdi,Superfast,2,ALJN,Aligarh Jn,128,08:47,08:49
+T5,12034,Kanpur Shatabdi,Superfast,3,TDL,Tundla Jn,224,09:40,09:42
+T5,12034,Kanpur Shatabdi,Superfast,4,ETW,Etawah,297,10:21,10:23
+T5,12034,Kanpur Shatabdi,Superfast,5,CNB,Kanpur Central,440,11:40,--
+T6,14217,Kashi Express,Express,0,NDLS,New Delhi,0,--,08:02
+T6,14217,Kashi Express,Express,1,GZB,Ghaziabad Jn,19,08:12,08:14
+T6,14217,Kashi Express,Express,2,ALJN,Aligarh Jn,128,09:13,09:15
+T6,14217,Kashi Express,Express,3,TDL,Tundla Jn,224,10:06,10:08
+T6,14217,Kashi Express,Express,4,ETW,Etawah,297,10:47,10:49
+T6,14217,Kashi Express,Express,5,CNB,Kanpur Central,440,12:06,--
+T7,12444,Dibrugarh Rajdhani,Rajdhani,0,NDLS,New Delhi,0,--,08:26
+T7,12444,Dibrugarh Rajdhani,Rajdhani,1,GZB,Ghaziabad Jn,19,08:36,08:38
+T7,12444,Dibrugarh Rajdhani,Rajdhani,2,ALJN,Aligarh Jn,128,09:37,09:39
+T7,12444,Dibrugarh Rajdhani,Rajdhani,3,TDL,Tundla Jn,224,10:30,10:32
+T7,12444,Dibrugarh Rajdhani,Rajdhani,4,ETW,Etawah,297,11:11,11:13
+T7,12444,Dibrugarh Rajdhani,Rajdhani,5,CNB,Kanpur Central,440,12:30,--
+T8,11015,Kushinagar Express,Express,0,NDLS,New Delhi,0,--,08:52
+T8,11015,Kushinagar Express,Express,1,GZB,Ghaziabad Jn,19,09:02,09:04
+T8,11015,Kushinagar Express,Express,2,ALJN,Aligarh Jn,128,10:03,10:05
+T8,11015,Kushinagar Express,Express,3,TDL,Tundla Jn,224,10:56,10:58
+T8,11015,Kushinagar Express,Express,4,ETW,Etawah,297,11:37,11:39
+T8,11015,Kushinagar Express,Express,5,CNB,Kanpur Central,440,12:56,--
+T9,19040,Firozpur Janata Exp,Passenger,0,NDLS,New Delhi,0,--,09:18
+T9,19040,Firozpur Janata Exp,Passenger,1,GZB,Ghaziabad Jn,19,09:28,09:30
+T9,19040,Firozpur Janata Exp,Passenger,2,ALJN,Aligarh Jn,128,10:29,10:31
+T9,19040,Firozpur Janata Exp,Passenger,3,TDL,Tundla Jn,224,11:22,11:24
+T9,19040,Firozpur Janata Exp,Passenger,4,ETW,Etawah,297,12:03,12:05
+T9,19040,Firozpur Janata Exp,Passenger,5,CNB,Kanpur Central,440,13:22,--

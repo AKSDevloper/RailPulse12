@@ -1,0 +1,40 @@
+{
+  "train_type_map": {
+    "Express": 0,
+    "Mail/Express": 1,
+    "Passenger": 2,
+    "Rajdhani": 3,
+    "Superfast": 4
+  },
+  "feature_columns": [
+    "block_length_km",
+    "block_mps_kmh",
+    "max_speed_kmh",
+    "speed_headroom",
+    "hour_of_day",
+    "day_night",
+    "preceding_gap_km",
+    "close_following",
+    "held_for_crossing",
+    "platform_available",
+    "historical_station_bias_min",
+    "block_status_clear",
+    "block_status_restricted",
+    "block_status_blocked",
+    "historical_train_block_avg_speed",
+    "block_average_speed",
+    "priority_ratio",
+    "priority_weight",
+    "train_type_code"
+  ],
+  "target_column": "actual_time_min",
+  "day_night_definition": "1=daytime 06:00-17:59, 0=nighttime 18:00-05:59",
+  "priority_weights": {
+    "Rajdhani": 1.0,
+    "Superfast": 0.97,
+    "Mail/Express": 0.9,
+    "Express": 0.88,
+    "Passenger": 0.78,
+    "Freight": 0.72
+  }
+}

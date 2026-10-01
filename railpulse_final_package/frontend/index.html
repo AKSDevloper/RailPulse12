@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RailPulse · Intelligent Train Traffic Control</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-title">RailPulse</div>
+      <div class="brand-sub">AI Train Traffic Control &middot; NDLS&ndash;CNB</div>
+    </div>
+
+    <nav class="nav" id="nav">
+      <button class="nav-btn active" data-page="overview"><span class="nav-icon">⌂</span>Overview</button>
+      <button class="nav-btn" data-page="controller"><span class="nav-icon">▱</span>Controller View</button>
+      <button class="nav-btn" data-page="passenger"><span class="nav-icon">♧</span>Passenger View</button>
+      <button class="nav-btn" data-page="ml"><span class="nav-icon">▥</span>ML Analytics</button>
+      <button class="nav-btn" data-page="faults"><span class="nav-icon">△</span>Fault Injection</button>
+      <button class="nav-btn" data-page="timetable"><span class="nav-icon">▤</span>Timetable</button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="clock-row">
+        <span id="sim-clock">--:--</span>
+        <span class="cycle-tag" id="sim-cycle">cycle 1</span>
+      </div>
+      <div class="conn-row">
+        <span class="conn-dot" id="conn-dot"></span>
+        <span id="conn-label">connecting...</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="topbar-route"><div class="route-icon">▣</div><div><div class="topbar-title" id="page-title">Delhi → Kanpur</div><div class="topbar-sub" id="topbar-sub">NDLS – CNB · Intelligent Train Traffic Control</div></div></div>
+      <div class="topbar-right"><span class="live-indicator"><i></i> Live</span><span id="topbar-updated">Last updated —</span><span class="notification">♟ <b>3</b></span><span class="controller-badge">AD</span><span class="controller-name">Controller⌄</span></div>
+    </div>
+
+    <!-- ============================ OVERVIEW ============================ -->
+    <section class="page" id="page-overview">
+      <div class="overview-kpis">
+        <div class="dash-kpi kpi-trains">
+          <div class="kpi-icon">▣</div><div><div class="dash-kpi-label">Total Trains</div><div class="dash-kpi-value" id="ov-total-trains">--</div><div class="dash-kpi-sub" id="ov-trains-sub">Active services</div></div>
+        </div>
+        <div class="dash-kpi kpi-green">
+          <div class="kpi-icon">◔</div><div><div class="dash-kpi-label">On-Time Performance</div><div class="dash-kpi-value" id="ov-ontime">--<span>%</span></div><div class="dash-kpi-sub" id="ov-ontime-sub">Live corridor KPI</div></div>
+        </div>
+        <div class="dash-kpi kpi-purple">
+          <div class="kpi-icon">⌛</div><div><div class="dash-kpi-label">Avg. Delay</div><div class="dash-kpi-value" id="ov-avg-delay">--</div><div class="dash-kpi-sub">Live network average</div></div>
+        </div>
+        <div class="dash-kpi kpi-red">
+          <div class="kpi-icon">△</div><div><div class="dash-kpi-label">Blocks at Risk</div><div class="dash-kpi-value" id="ov-block-risk">--</div><div class="dash-kpi-sub" id="ov-risk-sub">Restricted / blocked</div></div>
+        </div>
+        <div class="dash-kpi kpi-blue">
+          <div class="kpi-icon">◎</div><div><div class="dash-kpi-label">Model Confidence</div><div class="dash-kpi-value" id="ov-model-confidence">--</div><div class="dash-kpi-sub" id="ov-model-sub">Live prediction monitor</div></div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-main">
+          <div class="card map-card">
+            <div class="card-head">
+              <div><div class="card-title">Live Train Map</div><div class="card-subtitle">New Delhi → Kanpur Central · real-time block status and train positions</div></div>
+              <div class="map-actions"><span class="map-status"><i class="dot green"></i>Clear</span><span class="map-status"><i class="dot amber"></i>Restricted / TSR</span><span class="map-status"><i class="dot red"></i>Blocked</span><button class="btn-ghost map-view">Map View⌄</button></div>
+            </div>
+            <div class="map-legend-box">
+              <div><b>Train</b><span class="legend-dot train"></span></div><div><b>Station</b><span class="legend-dot station"></span></div><div><b>Event / Alert</b><span class="legend-dot alert"></span></div><div><b>Speed Restriction</b><span class="legend-triangle">▲</span></div>
+            </div>
+            <div id="ov-map"></div>
+            <div class="map-footer"><span id="ov-route-distance">Route distance —</span><span id="ov-live-clock">Live —</span><button class="btn-primary compact" id="ov-next-cycle-btn">Start next cycle</button></div>
+          </div>
+
+          <div class="dashboard-two-col">
+            <div class="card">
+              <div class="card-head"><div><div class="card-title">Network Delay Trend <span class="live-chip">● Live</span></div><div class="card-subtitle">Average delay across dispatched trains</div></div></div>
+              <div id="ov-delay-chart"></div>
+            </div>
+            <div class="card">
+              <div class="card-head"><div><div class="card-title">Section Congestion</div><div class="card-subtitle">Current occupancy across route blocks</div></div></div>
+              <div class="congestion-wrap"><div id="ov-congestion-chart"></div><div class="congestion-summary" id="ov-congestion-summary"></div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div><div class="card-title">Recent Faults &amp; Alerts</div><div class="card-subtitle">Latest operational events from the live simulator</div></div></div>
+            <div id="ov-fault-list"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div><div class="card-title">Station Arrivals</div><div class="card-subtitle">Scheduled vs. actual clearance time at each station</div></div></div>
+            <table class="tbl"><thead><tr><th>Train</th><th>Station</th><th>Scheduled</th><th>Actual</th><th>Delay</th></tr></thead><tbody id="ov-station-log"></tbody></table>
+          </div>
+        </div>
+
+        <aside class="dashboard-side">
+          <div class="card side-card">
+            <div class="side-head"><div class="card-title">Live Events <span class="count-badge" id="ov-event-count">0</span></div><span class="side-link">View All →</span></div>
+            <div id="ov-live-events" class="event-list"></div>
+          </div>
+
+          <div class="card side-card">
+            <div class="side-head"><div class="card-title">Manual Control</div><button class="danger-btn" type="button">Inject Fault</button></div>
+            <div class="control-form">
+              <label>Fault Type</label><select class="select" id="ov-fault-type"></select>
+              <label>Select Section</label><select class="select" id="ov-fault-block"></select>
+              <button class="btn-primary wide" id="ov-fault-inject-btn" type="button">Inject Fault</button>
+            </div>
+          </div>
+
+          <div class="card side-card">
+            <div class="side-head"><div class="card-title">Key Insights <span class="mini-ai">AI</span></div><span class="side-link">View Details →</span></div>
+            <div class="confidence-ring"><div class="ring-value" id="ov-ring-value">--</div><div class="ring-label">Model Confidence</div></div>
+            <div class="prediction-box"><span>Predicted Delay</span><strong id="ov-predicted-delay">--</strong><small>next 3 sections · avg.</small></div>
+            <div class="risk-title">Top Risk Sections</div><div id="ov-risk-list"></div>
+          </div>
+
+          <div class="card side-card">
+            <div class="side-head"><div class="card-title">Quick Stats</div></div>
+            <div class="quick-stats" id="ov-quickstats"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============================ STATION MASTER ============================ -->
+    <section class="page hidden" id="page-controller">
+      <div class="station-master-kpis" id="sm-kpis"></div>
+      <div class="station-master-grid">
+        <div class="card sm-map-card">
+          <div class="card-head"><div><div class="card-title">Station Master · Live Traffic Desk</div><div class="card-subtitle">Click any train for live movement, delay cause, headway and ML ETA</div></div><span class="live-chip">● Live control</span></div>
+          <div id="ctl-map"></div>
+          <div class="legend"><span><i style="background:#2C3A4E"></i>Clear</span><span><i style="background:#F2B84B"></i>Restricted</span><span><i style="background:#FF6B6B"></i>Blocked</span><span><i style="background:#3FD6C0;border-radius:50%"></i>On time</span><span><i style="background:#FF6B6B;border-radius:50%"></i>Delayed</span></div>
+        </div>
+        <div class="card sm-events-card"><div class="card-head"><div><div class="card-title">Live Events &amp; Conflicts</div><div class="card-subtitle">Actionable traffic-control events</div></div><span class="count-badge" id="sm-event-count">0</span></div><div id="sm-live-events" class="event-list"></div></div>
+      </div>
+      <div class="station-master-grid lower">
+        <div class="card"><div class="card-head"><div><div class="card-title">Platform Occupancy Board</div><div class="card-subtitle">All corridor stations · live platform occupancy and reservations</div></div></div><div id="sm-platform-board" class="platform-board"></div></div>
+        <div class="card"><div class="card-head"><div><div class="card-title">Dispatch &amp; Headway Queue</div><div class="card-subtitle">Closest following trains and required separation</div></div></div><div id="sm-headway-board"></div></div>
+      </div>
+      <div class="card hidden" id="ctl-detail-card"><div class="card-head"><div><div class="card-title" id="ctl-detail-title">&mdash;</div><div class="card-subtitle" id="ctl-detail-sub">&mdash;</div></div><button class="btn-ghost" id="ctl-detail-close">&times;</button></div><div class="detail-grid" id="ctl-detail-grid"></div></div>
+      <div class="card"><div class="card-head"><div><div class="card-title">Block &amp; Route Occupancy</div><div class="card-subtitle">Current condition, trains inside each section and movement limit</div></div></div><table class="tbl"><thead><tr><th>Section</th><th>Length</th><th>MPS</th><th>Status</th><th>Occupancy</th><th>Operational action</th></tr></thead><tbody id="ctl-block-table"></tbody></table></div>
+    </section>
+
+    <!-- ============================ PASSENGER ============================ -->
+    <section class="page hidden" id="page-passenger">
+      <div class="pax-top card"><div class="pax-select-wrap"><label>Select train</label><select class="select" id="pax-train-select"></select></div><div class="pax-route-summary"><span class="route-node origin">●</span><div><small>From</small><b>New Delhi (NDLS)</b></div><strong>→</strong><span class="route-node destination">●</span><div><small>To</small><b>Kanpur Central (CNB)</b></div></div><div class="pax-live-status"><span class="status-light"></span><b id="pax-top-status">Waiting</b><small id="pax-last-update">Live data</small></div></div>
+      <div class="pax-main-grid"><div class="card pax-map-card"><div class="card-head"><div><div class="card-title">Live Train Tracking</div><div class="card-subtitle">Safe train separation · next station ETA · route blocks</div></div><span class="live-chip">● Real-time</span></div><div id="pax-map"></div><div class="pax-map-note"><span><i class="pax-dot on"></i>On time</span><span><i class="pax-dot warn"></i>Minor delay</span><span><i class="pax-dot danger"></i>Major delay</span><span>Minimum safety gap: <b>5 km</b></span></div></div><aside class="card pax-selected-card" id="pax-selected-details"></aside></div>
+      <div class="pax-dashboard-grid"><div class="card"><div class="card-head"><div><div class="card-title">Journey &amp; Station Board</div><div class="card-subtitle">All stations · live status, scheduled time and updated arrival time</div></div><span class="board-rule">LIVE BOARD</span></div><div class="pax-station-board" id="pax-station-board"></div></div><div class="pax-side-stack"><div class="card"><div class="card-head"><div><div class="card-title">Passenger Alerts</div><div class="card-subtitle">Clear reason when a delay affects your journey</div></div></div><div id="pax-alerts"></div></div></div></div>
+      <div class="card pax-useful"><div class="card-head"><div><div class="card-title">Passenger Information</div><div class="card-subtitle">Live information for the selected journey</div></div></div><div class="useful-grid" id="pax-useful-grid"></div></div>
+    </section>
+
+    <!-- ============================ ML ANALYTICS ============================ -->
+    <section class="page hidden" id="page-ml">
+      <div class="card"><div class="card-head"><div><div class="card-title">ML Prediction Control Room</div><div class="card-subtitle" id="ml-model-name">Loading model information…</div></div><span class="mini-ai">AI LIVE</span></div><div class="metric-row" id="ml-offline-metrics"></div><div class="card-subtitle" style="margin-top:18px;margin-bottom:6px;">Feature importance</div><div id="ml-feature-chart"></div></div>
+      <div class="card"><div class="card-head"><div><div class="card-title">Live Model Monitoring</div><div class="card-subtitle">Prediction versus actual block movement and current model health</div></div></div><div class="metric-row" id="ml-live-metrics"></div><div class="grid-2" style="margin-top:16px;"><div><div class="card-subtitle" style="margin-bottom:6px;">Rolling accuracy</div><div id="ml-accuracy-chart"></div></div><div><div class="card-subtitle" style="margin-bottom:6px;">Rolling prediction error</div><div id="ml-mae-chart"></div></div></div></div>
+      <div class="card"><div class="card-head"><div><div class="card-title">Live ML Predictions · All Trains</div><div class="card-subtitle">Click any train to inspect prediction, uncertainty, delay cause and features</div></div></div><div id="ml-train-predictions" class="ml-train-grid"></div></div>
+      <div class="card hidden" id="ml-detail-card"><div class="card-head"><div><div class="card-title" id="ml-detail-title">Train prediction</div><div class="card-subtitle" id="ml-detail-sub">Live inference details</div></div><button class="btn-ghost" id="ml-detail-close">&times;</button></div><div id="ml-detail-body"></div></div>
+      <div class="card"><div class="card-head"><div><div class="card-title">Live Feature Feed</div><div class="card-subtitle">Exact feature vector for the selected train's current block</div></div></div><select class="select" id="ml-feed-select" style="margin-bottom:14px;"></select><table class="tbl" id="ml-feed-table"><tbody></tbody></table></div>
+    </section>
+
+    <!-- ============================ FAULTS ============================ -->
+    <section class="page hidden" id="page-faults">
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Inject a fault</div><div class="card-subtitle">Simulates a disruption; downstream ETAs recalculate on the next tick</div></div></div>
+        <div class="fault-form">
+          <div class="field">
+            <label>Section</label>
+            <select class="select" id="fault-block"></select>
+          </div>
+          <div class="field">
+            <label>Fault type</label>
+            <select class="select" id="fault-type"></select>
+          </div>
+          <button class="btn-primary" id="fault-inject-btn">Inject fault</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Active faults</div><div class="card-subtitle" id="fault-count-sub">0 currently in effect</div></div></div>
+        <div id="fault-empty" class="empty hidden">No active faults. Track is clear across all sections.</div>
+        <table class="tbl" id="fault-table"><tbody></tbody></table>
+      </div>
+    </section>
+
+    <!-- ============================ TIMETABLE ============================ -->
+    <section class="page hidden" id="page-timetable">
+      <div class="card">
+        <div class="card-head"><div><div class="card-title">Delhi &rarr; Kanpur &middot; baseline timetable</div><div class="card-subtitle">Scheduled vs. live prediction</div></div></div>
+        <table class="tbl">
+          <thead><tr><th>Train</th><th>Type</th><th>Departs NDLS</th><th>Status</th><th>Live ETA</th><th>Delay</th><th>Platform</th></tr></thead>
+          <tbody id="tt-table"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
